@@ -1,0 +1,27 @@
+// Module included in the following assemblies:
+//
+// * release_notes/logging-release-notes.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="logging-release-notes-6-3-3_{context}"]
+= Logging 6.3.3 release notes
+
+This release includes link:https://access.redhat.com/errata/RHBA-2026:2489[RHBA-2026:2489].
+
+[id="openshift-logging-release-notes-6-3-3-enhancements_{context}"]
+== New features and enhancements
+
+* With this update, the log collector is updated to Vector 0.47.0-rh.
+(link:https://issues.redhat.com/browse/LOG-8138[LOG-8138])
+
+[id="logging-release-notes-6-3-3-bug-fixes_{context}"]
+== Bug fixes
+
+* Before this update, the collector merged large application log messages without enforcing a size limit, which could cause internal output buffers to overflow. With this update, the `MaxMessageSize` tuning parameter is introduced for application logs. The collector now discards messages that exceed the configured threshold, preventing buffer exhaustion.
+(link:https://issues.redhat.com/browse/LOG-8304[LOG-8304])
+
+* Before this update, a short timeout between the distributor and ingester components caused intermittent HTTP 503 errors when ingesting logs into LokiStack under high load. With this update, the timeout is increased, improving ingestion reliability during peak workloads.
+(link:https://issues.redhat.com/browse/LOG-8586[LOG-8586])
+
+* Before this update, enabling the `rateLimitPerContainer` setting resulted in error events reporting `Missing fields on event: ["file"]` due to incorrect throttle configuration generation. With this update, the throttle configuration is generated correctly, and all expected event fields are preserved when you enable rate limiting.
+(link:https://issues.redhat.com/browse/LOG-8614[LOG-8614])
