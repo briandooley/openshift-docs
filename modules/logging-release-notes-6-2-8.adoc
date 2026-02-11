@@ -1,0 +1,27 @@
+// Module included in the following assemblies:
+//
+// * release_notes/logging-release-notes-6.2.adoc
+
+:_mod-docs-content-type: REFERENCE
+[id="logging-release-notes-6-2-8_{context}"]
+= Logging 6.2.8 Release Notes
+
+This release includes link:https://access.redhat.com/errata/RHBA-2026:2565[RHBA-2026:2565].
+
+[id="openshift-logging-release-notes-6-2-8-enhancements_{context}"]
+== New features and enhancements
+
+* With this update, the log collector is updated to Vector 0.47.0.
+(link:https://issues.redhat.com/browse/LOG-8137[LOG-8137])
+
+[id="logging-release-notes-6-2-8-bug-fixes_{context}"]
+== Bug fixes
+
+* Before this update, requests exceeding the Kafka broker `message.max.size` setting were rejected because the collector tuning did not correctly configure the Kafka producer. With this update, the Kafka client configuration allows messages up to the configured `MaxSize`. As a result, the Kafka sink correctly processes log messages within the allowed size limit.
+(link:https://issues.redhat.com/browse/LOG-7754[LOG-7754])
+
+* Before this update, the `ClusterLogForwarder` API required OpenTelemetry Protocol (OTLP) endpoint URLs to terminate with `v1/logs`, which made validation too restrictive for some receivers. With this update, the validation allows any HTTP or HTTPS URL. As a result, you can configure OTLP endpoints with more flexible URL structures.
+(link:https://issues.redhat.com/browse/LOG-8003[LOG-8003])
+
+* Before this update, the collector merged large application log messages without size restrictions. As a consequence, merged lines could overflow an output buffer. With this update, the `MaxMessageSize` tuning parameter is introduced for application logs. As a result, the collector discards messages that exceed the configured threshold, which prevents buffer overflows and helps ensure collector stability.
+(link:https://issues.redhat.com/browse/LOG-8292[LOG-8292])
